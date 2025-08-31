@@ -59,7 +59,7 @@ Este guia explica como configurar e rodar o **Sistema Comparador** que utiliza:
 - **Private key (.pem)**:
   - Vá em **Private keys → Generate private key**
   - Baixe o arquivo `.pem`
-  - Salve em `/keys/github_app.pem`
+  - Salve em `projeto-comparador/keys/github_app.pem`
 
 ---
 
