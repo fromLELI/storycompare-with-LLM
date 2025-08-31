@@ -3,13 +3,11 @@
 *.env
 *.pem
 
-# Chaves privadas
+# Pasta de chaves privadas
 keys/
-/projeto-comparador/keys/
-/keys/
 
 # Resultados do comparador (versões dos requisitos)
-requisitos_*_v*/ 
+requisitos_*_v*/
 
 # Arquivos de saída
 relatorio.md
