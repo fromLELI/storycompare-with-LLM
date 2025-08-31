@@ -3,6 +3,7 @@ from github import Github, GithubIntegration
 from dotenv import load_dotenv, find_dotenv
 import groq
 
+# Carregar variáveis de ambiente
 _ = load_dotenv(find_dotenv())
 
 client = groq.Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -18,9 +19,11 @@ git_integration = GithubIntegration(APP_ID, private_key)
 access_token = git_integration.get_access_token(INSTALLATION_ID).token
 g = Github(access_token)
 
+
 def load_file(path):
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
+
 
 def extract_code_from_repo(repo_name, extensions=('.py', '.js', '.java')):
     repo = g.get_repo(repo_name)
@@ -36,6 +39,7 @@ def extract_code_from_repo(repo_name, extensions=('.py', '.js', '.java')):
             numbered = "\n".join([f"{i+1}: {line}" for i, line in enumerate(snippet.splitlines())])
             code_data.append(f"### {file.path}\n{numbered}")
     return "\n\n".join(code_data)
+
 
 def compare_with_llm(prompt_base, requisitos, codigo):
     final_prompt = f"""
@@ -55,9 +59,28 @@ def compare_with_llm(prompt_base, requisitos, codigo):
 
     return chat_completion.choices[0].message.content
 
-def salvar_resposta(resposta, requisitos_file, versao="v1"):
+
+def proxima_versao(pasta_resultados, nome_base):
+    """
+    Descobre automaticamente a próxima versão: v1, v2, v3...
+    """
+    versao = 1
+    while True:
+        pasta = os.path.join(pasta_resultados, f"{nome_base}_v{versao}")
+        if not os.path.exists(pasta):
+            return versao, pasta
+        versao += 1
+
+
+def salvar_resposta(resposta, requisitos_file):
     nome_base = os.path.splitext(os.path.basename(requisitos_file))[0]
-    pasta_saida = f"{nome_base}_{versao}"
+
+    # Criar pasta principal de resultados
+    pasta_resultados = "resultados"
+    os.makedirs(pasta_resultados, exist_ok=True)
+
+    # Descobrir a próxima versão disponível
+    versao, pasta_saida = proxima_versao(pasta_resultados, nome_base)
     os.makedirs(pasta_saida, exist_ok=True)
 
     partes = resposta.split("====")
@@ -72,7 +95,8 @@ def salvar_resposta(resposta, requisitos_file, versao="v1"):
             with open(os.path.join(pasta_saida, "resumo_executivo.txt"), "w", encoding="utf-8") as f:
                 f.write(parte.replace("RESUMO EXECUTIVO", "").strip())
 
-    print(f"Resultados salvos em: {pasta_saida}/")
+    print(f"📂 Resultados salvos em: {pasta_saida}/ (versão v{versao})")
+
 
 if __name__ == "__main__":
     requisitos_file = "requisitos.txt"
@@ -85,4 +109,4 @@ if __name__ == "__main__":
     print("\n📊 RESULTADO COMPLETO:\n")
     print(resultado)
 
-    salvar_resposta(resultado, requisitos_file, versao="v1")
+    salvar_resposta(resultado, requisitos_file)
