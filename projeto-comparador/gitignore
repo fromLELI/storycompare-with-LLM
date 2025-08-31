@@ -1,6 +1,12 @@
 # Arquivos sensíveis
 .env
+*.env
 *.pem
+
+# Chaves privadas
+keys/
+/projeto-comparador/keys/
+/keys/
 
 # Resultados do comparador (versões dos requisitos)
 requisitos_*_v*/ 
@@ -17,7 +23,6 @@ __pycache__/
 *.pyd
 
 # Ambiente virtual
-.env/
 .venv/
 venv/
 ENV/
