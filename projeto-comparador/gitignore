@@ -1,0 +1,39 @@
+# Arquivos sensíveis
+.env
+*.pem
+
+# Resultados do comparador (versões dos requisitos)
+requisitos_*_v*/ 
+
+# Arquivos de saída
+relatorio.md
+resumo_executivo.txt
+codigo_atualizado.py
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambiente virtual
+.env/
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Configurações de IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos temporários
+.DS_Store
+Thumbs.db
+
+# Notebooks Jupyter
+.ipynb_checkpoints/

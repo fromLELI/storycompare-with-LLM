@@ -1,0 +1,15 @@
+# Documento de Requisitos (User Stories)
+
+1. Como usuário, quero poder **multiplicar dois números** para não precisar calcular manualmente.
+   - Critérios de aceitação:
+     - Função chamada "multiplica"
+     - Retorna a multiplicação de dois inteiros
+
+2. Como usuário, quero poder **dividir dois números** para facilitar meus cálculos.
+   - Critérios de aceitação:
+     - Função chamada "divide"
+     - Deve retornar resultado float
+     - Caso divisor seja zero, deve retornar mensagem "Divisão por zero não permitida."
+
+3. Como usuário, quero que o **menu inicial mostre todas as operações disponíveis**
+   - Soma, Subtração, Multiplicação, Divisão
